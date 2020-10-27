@@ -28,22 +28,23 @@ public class Generator {
         return random.nextInt(to - from + 1) + from;
     }
 
-    public ArrayList<Instance> generateInstances(int size) {
+    public ArrayList<Task> generateInstances(int size) {
         maxW = size/10;
         maxR = (int) Math.round(size * maxP * 0.5);
 
-        ArrayList<Instance> instances = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            Instance instance = new Instance();
+            Task task = new Task();
             int randomP = generateNextInt(minP, maxP);
-            instance.setP(randomP);
+            task.setP(randomP);
             int randomR = generateNextInt(minR, maxR);
-            instance.setR(randomR);
+            task.setR(randomR);
             minD = randomR + randomP;
             maxD = minD + 100;
-            instance.setD(generateNextInt(minD, maxD));
-            instance.setW(generateNextInt(minW, maxW));
+            task.setD(generateNextInt(minD, maxD));
+            task.setW(generateNextInt(minW, maxW));
+            tasks.add(task);
         }
-        return instances;
+        return tasks;
     }
 }

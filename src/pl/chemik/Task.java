@@ -1,15 +1,15 @@
 package pl.chemik;
 
-public class Instance {
+public class Task {
     private int p;
     private int r;
     private int d;
     private int w;
 
-    public Instance() {
+    public Task() {
     }
 
-    public Instance(int p, int r, int d, int w) {
+    public Task(int p, int r, int d, int w) {
         this.p = p;
         this.r = r;
         this.d = d;
