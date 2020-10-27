@@ -3,7 +3,7 @@ package pl.chemik;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Generator {
+public class InstanceGenerator {
 
     private Random random;
 
@@ -20,7 +20,7 @@ public class Generator {
     private int maxW ;
 
 
-    public Generator() {
+    public InstanceGenerator() {
         random = new Random();
     }
 
