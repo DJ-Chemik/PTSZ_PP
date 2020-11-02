@@ -1,6 +1,7 @@
 package pl.chemik;
 
 public class Task {
+    private int id;
     private int p;
     private int r;
     private int d;
@@ -14,6 +15,22 @@ public class Task {
         this.r = r;
         this.d = d;
         this.w = w;
+    }
+
+    public Task(int id, int p, int r, int d, int w) {
+        this.id = id;
+        this.p = p;
+        this.r = r;
+        this.d = d;
+        this.w = w;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getP() {
