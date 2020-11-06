@@ -79,10 +79,10 @@ public class Validator {
         return true;
     }
 
-    private int checkCriterion(String index, int size, boolean checkSolution) {
+    private int checkCriterion(String index, int size, boolean willCheckSolution) {
         ArrayList<Task> tasks = tasksMap.get(index + "_" + size);
         ArrayList<Integer> resultIds = resultMap.get(index + "_" + size);
-        if (!checkSolution(index, size)) {
+        if (willCheckSolution && !checkSolution(index, size)) {
             System.out.println(">>>>>> Nieprawidłowa walidacja rozwiązania <<<<<<");
             return -1;
         }
