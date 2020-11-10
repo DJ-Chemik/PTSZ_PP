@@ -2,6 +2,8 @@ package pl.chemik;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -39,10 +41,10 @@ class TimeWeight {
 
 public class Algorithm1 {
 
-    private int index = 136809;
-    private int size = 50;
-    private String inputPath = "filesInput/" + index + "/" + index + "_" + size + ".txt";
-//    private String inputPath = "";
+    private int index;
+    private int size;
+    private String inputPath;
+    //    private String inputPath = "";
     private String outputPath = "";
 
     private int globalCriterion = 0;
@@ -72,7 +74,7 @@ public class Algorithm1 {
         scanner.close();
     }
 
-    public TimeWeight getTimeWeight(int time, Task task) {
+    private TimeWeight getTimeWeight(int time, Task task) {
         if (time < task.getR()) {
             time = task.getR();
         }
@@ -81,7 +83,7 @@ public class Algorithm1 {
         return new TimeWeight(time, weight);
     }
 
-    public TimeWeight getTimeWeights(int time, Task left, Task right) {
+    private TimeWeight getTimeWeights(int time, Task left, Task right) {
         TimeWeight leftTW = getTimeWeight(time, left);
         TimeWeight rightTW = getTimeWeight(leftTW.getTime(), right);
         int resultWeight = leftTW.getWeight() + rightTW.getWeight();
@@ -113,16 +115,35 @@ public class Algorithm1 {
         }
     }
 
-    public void run() {
+    public void generateSolutionFile() {
+        String filename = "filesAlg1/out_" + index + "_" + size + ".txt";
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(filename);
+            writer.write(globalCriterion + "\n");
+            for (int i = 0; i < size; i++) {
+                writer.write(tasks.get(i).getId() + " ");
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void run(int index, int size) {
+        this.index = index;
+        this.size = size;
+        this.inputPath = inputPath = "filesInput/" + index + "/" + index + "_" + size + ".txt";
         try {
             readFile();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        calculate();
-        System.out.println("Criterion: " + globalCriterion + ", time: " + globalTime);
-
         // START TIME
+        calculate();
+        //STOP TIME
+        System.out.println("Criterion: " + globalCriterion + ", time: " + globalTime);
+        generateSolutionFile();
 
 
     }
