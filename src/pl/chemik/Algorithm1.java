@@ -150,4 +150,11 @@ public class Algorithm1 {
         System.out.println("Size " + size + "   Criterion: " + globalCriterion + ", in time: " + (stopTime - startTime) + "ms");
         generateSolutionFile();
     }
+
+    public void runAlgorithmOneForIndex(int index) {
+        System.out.println("Algorithm One just started for index: " + index);
+        for (int size : Main.sizesArray) {
+            run(index, size);
+        }
+    }
 }

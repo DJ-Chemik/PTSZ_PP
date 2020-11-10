@@ -11,17 +11,13 @@ public class Main {
     public static Integer[] sizesArray = {50, 100, 150, 200, 250, 300, 350, 400, 450, 500};
 
     public static void main(String[] args) {
+        Algorithm1 algorithm1 = new Algorithm1();
+
 //        new InstanceFileGenerator().generateFiles();
 //        new DummyAlgorithm().generateSolutions();
 //        new Validator().runValidation();
-        Algorithm1 algorithm1 = new Algorithm1();
-        runAlgorithmOneForIndex(algorithm1,136809);
+        algorithm1.runAlgorithmOneForIndex( 136809);
     }
 
-    public static void runAlgorithmOneForIndex(Algorithm1 alg, int index) {
-        System.out.println("Algorithm One just started for index: " + index);
-        for (int size : sizesArray) {
-            alg.run(index, size);
-        }
-    }
+
 }
