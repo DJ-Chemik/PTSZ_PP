@@ -16,7 +16,7 @@ public class Main {
 //        new InstanceFileGenerator().generateFiles();
 //        new DummyAlgorithm().generateSolutions();
 //        new Validator().runValidation();
-        algorithm1.runAlgorithmOneForIndex( 136809);
+        algorithm1.runAlgorithmOneForIndex(132325);
     }
 
 
