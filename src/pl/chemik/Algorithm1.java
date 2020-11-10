@@ -96,22 +96,22 @@ public class Algorithm1 {
     }
 
     public void calculate() {
-        for (int j = 0; j < numberOfTasks; ++j) {
+        for (int i = 0; i < numberOfTasks; i++) {
             int time = globalTime;
 
-            for (int k = j; k < numberOfTasks; ++k) {
-                Task left = tasks.get(j);
-                Task right = tasks.get(k);
+            for (int j = i + 1; j < numberOfTasks; j++) {
+                Task left = tasks.get(i);
+                Task right = tasks.get(j);
 
                 TimeWeight beforeSwap = getTimeWeights(time, left, right);
                 TimeWeight afterSwap = getTimeWeights(time, right, left);
 
                 if (afterSwap.getWeight() < beforeSwap.getWeight()) {
-                    Collections.swap(tasks, j, k);
+                    Collections.swap(tasks, i, j);
                 }
             }
 
-            Task firstTask = tasks.get(j);
+            Task firstTask = tasks.get(i);
             TimeWeight globals = getTimeWeight(globalTime, firstTask);
 
             globalTime = globals.getTime();
@@ -144,7 +144,7 @@ public class Algorithm1 {
         calculate();
         long stopTime = System.currentTimeMillis();
         //STOP TIME
-        System.out.println("TIME: " + (stopTime - startTime));
+        System.out.println("REAL TIME: " + (stopTime - startTime) + "ms");
         System.out.println("Criterion: " + globalCriterion + ", in time: " + globalTime);
         generateSolutionFile();
     }
