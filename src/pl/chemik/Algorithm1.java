@@ -50,7 +50,7 @@ public class Algorithm1 {
         }
         numberOfTasks = scanner.nextInt();
 
-        tasks = new ArrayList<>();
+        this.tasks = new ArrayList<>();
         int i = 1;
         while (scanner.hasNextInt()) {
             int p = scanner.nextInt();
@@ -58,7 +58,7 @@ public class Algorithm1 {
             int d = scanner.nextInt();
             int w = scanner.nextInt();
             Task task = new Task(i, p, r, d, w);
-            tasks.add(task);
+            this.tasks.add(task);
             i++;
         }
         scanner.close();
@@ -136,14 +136,18 @@ public class Algorithm1 {
         this.index = index;
         this.size = size;
         this.inputPath = inputPath = "filesInput/" + index + "/" + index + "_" + size + ".txt";
+        this.globalTime = 0;
+        this.globalCriterion = 0;
+
         readFile();
         // START TIME
         long startTime = System.currentTimeMillis();
         calculate();
         long stopTime = System.currentTimeMillis();
         //STOP TIME
-        System.out.println("REAL TIME: " + (stopTime - startTime) + "ms");
-        System.out.println("Criterion: " + globalCriterion + ", in time: " + globalTime);
+//        System.out.println("REAL TIME: " + (stopTime - startTime) + "ms");
+//        System.out.println("Criterion: " + globalCriterion + ", in time: " + globalTime);
+        System.out.println("Size " + size + "   Criterion: " + globalCriterion + ", in time: " + (stopTime - startTime) + "ms");
         generateSolutionFile();
     }
 }

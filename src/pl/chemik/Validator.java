@@ -34,8 +34,7 @@ public class Validator {
     }
 
     private void readAllInputFiles() throws FileNotFoundException {
-        Integer[] indexesArray = {132203, 132325, 136558, 136674, 136698, 136704, 136748, 136751, 136760, 136800, 136809, 142192};
-        ArrayList<Integer> indexes = new ArrayList<>(Arrays.asList(indexesArray));
+        ArrayList<Integer> indexes = new ArrayList<>(Arrays.asList(Main.indexesArray));
         for (int index : indexes) {
             for (int size = 50; size <= 500; size += 50) {
                 ArrayList<Task> tasks = readInputFile(index, size);
