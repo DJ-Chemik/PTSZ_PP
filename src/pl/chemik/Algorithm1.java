@@ -55,9 +55,14 @@ public class Algorithm1 {
     public Algorithm1() {
     }
 
-    public void readFile() throws FileNotFoundException {
+    public void readFile() {
         File file = new File(inputPath);
-        Scanner scanner = new Scanner(file);
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         numberOfTasks = scanner.nextInt();
 
         tasks = new ArrayList<>();
@@ -93,7 +98,6 @@ public class Algorithm1 {
     public void calculate() {
         for (int j = 0; j < numberOfTasks; ++j) {
             int time = globalTime;
-            int criterion = globalCriterion;
 
             for (int k = j; k < numberOfTasks; ++k) {
                 Task left = tasks.get(j);
@@ -134,11 +138,7 @@ public class Algorithm1 {
         this.index = index;
         this.size = size;
         this.inputPath = inputPath = "filesInput/" + index + "/" + index + "_" + size + ".txt";
-        try {
-            readFile();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        readFile();
         // START TIME
         long startTime = System.currentTimeMillis();
         calculate();
