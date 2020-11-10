@@ -9,6 +9,6 @@ public class Main {
 //        new InstanceFileGenerator().generateFiles();
 //        new DummyAlgorithm().generateSolutions();
 //        new Validator().runValidation();
-        new Algorithm1().run(136809, 50);
+        new Algorithm1().run(136809, 500);
     }
 }

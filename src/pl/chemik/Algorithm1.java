@@ -140,11 +140,12 @@ public class Algorithm1 {
             e.printStackTrace();
         }
         // START TIME
+        long startTime = System.currentTimeMillis();
         calculate();
+        long stopTime = System.currentTimeMillis();
         //STOP TIME
-        System.out.println("Criterion: " + globalCriterion + ", time: " + globalTime);
+        System.out.println("TIME: " + (stopTime - startTime));
+        System.out.println("Criterion: " + globalCriterion + ", in time: " + globalTime);
         generateSolutionFile();
-
-
     }
 }
