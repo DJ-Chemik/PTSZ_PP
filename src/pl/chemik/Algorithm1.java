@@ -4,38 +4,25 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-class TimeWeight {
+class CostRelation {
     private int time;
-    private int weight;
+    private int cost;
 
-    public TimeWeight() {
-    }
-
-    public TimeWeight(int time, int weight) {
+    public CostRelation(int time, int cost) {
         this.time = time;
-        this.weight = weight;
+        this.cost = cost;
     }
 
     public int getTime() {
         return time;
     }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public int getCost() {
+        return cost;
     }
 }
 
@@ -44,8 +31,6 @@ public class Algorithm1 {
     private int index;
     private int size;
     private String inputPath;
-    //    private String inputPath = "";
-    private String outputPath = "";
 
     private int globalCriterion = 0;
     private int globalTime = 0;
@@ -79,20 +64,31 @@ public class Algorithm1 {
         scanner.close();
     }
 
-    private TimeWeight getTimeWeight(int time, Task task) {
-        if (time < task.getR()) {
-            time = task.getR();
+    private CostRelation checkTaskCost(int time, Task task) {
+        int r = task.getR();
+        if (time < r) {
+            time = r;
         }
         time += task.getP();
-        int weight = time > task.getD() ? task.getW() : 0;
-        return new TimeWeight(time, weight);
+        int cost = 0;
+        if (time > task.getD()) {
+            cost = task.getW();
+        }
+        return new CostRelation(time, cost);
     }
 
-    private TimeWeight getTimeWeights(int time, Task left, Task right) {
-        TimeWeight leftTW = getTimeWeight(time, left);
-        TimeWeight rightTW = getTimeWeight(leftTW.getTime(), right);
-        int resultWeight = leftTW.getWeight() + rightTW.getWeight();
-        return new TimeWeight(rightTW.getTime(), resultWeight);
+    private CostRelation checkOrderingCost(int time, Task firstTask, Task secondTask) {
+        CostRelation firstTaskCost = checkTaskCost(time, firstTask);
+        CostRelation secondTaskCost = checkTaskCost(firstTaskCost.getTime(), secondTask);
+        int resultCost = firstTaskCost.getCost() + secondTaskCost.getCost();
+        return new CostRelation(secondTaskCost.getTime(), resultCost);
+    }
+
+    private void displayAllIterationOfOrderingInConsole() {
+        for (Task t : tasks) {
+            System.out.print(t.getId() + "  ");
+        }
+        System.out.println("----------------------------");
     }
 
     public void calculate() {
@@ -103,19 +99,21 @@ public class Algorithm1 {
                 Task left = tasks.get(i);
                 Task right = tasks.get(j);
 
-                TimeWeight beforeSwap = getTimeWeights(time, left, right);
-                TimeWeight afterSwap = getTimeWeights(time, right, left);
+                CostRelation beforeSwap = checkOrderingCost(time, left, right);
+                CostRelation afterSwap = checkOrderingCost(time, right, left);
 
-                if (afterSwap.getWeight() < beforeSwap.getWeight()) {
+                if (afterSwap.getCost() < beforeSwap.getCost()) {
                     Collections.swap(tasks, i, j);
                 }
+
+//                displayAllIterationOfOrderingInConsole();
             }
 
-            Task firstTask = tasks.get(i);
-            TimeWeight globals = getTimeWeight(globalTime, firstTask);
+            Task taskToAppend = tasks.get(i);
+            CostRelation result = checkTaskCost(globalTime, taskToAppend);
 
-            globalTime = globals.getTime();
-            globalCriterion += globals.getWeight();
+            globalTime = result.getTime();
+            globalCriterion += result.getCost();
         }
     }
 
