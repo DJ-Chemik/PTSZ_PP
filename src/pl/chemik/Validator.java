@@ -6,10 +6,11 @@ import java.util.*;
 
 public class Validator {
 
+    private int readedCriterion;
     private Map<String, ArrayList<Task>> tasksMap = new HashMap();
     private Map<String, ArrayList<Integer>> resultMap = new HashMap();
 
-    private ArrayList<Task> readInputFile(int index, int size) throws FileNotFoundException {
+    private ArrayList<Task> readInputInstanceFile(int index, int size) throws FileNotFoundException {
         String filepath = "filesInput/" + index + "/" + index + "_" + size + ".txt";
         File file = new File(filepath);
         Scanner scanner = new Scanner(file);
@@ -37,7 +38,7 @@ public class Validator {
         ArrayList<Integer> indexes = new ArrayList<>(Arrays.asList(Main.indexesArray));
         for (int index : indexes) {
             for (int size = 50; size <= 500; size += 50) {
-                ArrayList<Task> tasks = readInputFile(index, size);
+                ArrayList<Task> tasks = readInputInstanceFile(index, size);
                 tasksMap.put(index + "_" + size, tasks);
             }
         }
@@ -46,7 +47,7 @@ public class Validator {
     private ArrayList<Integer> readOneSolution(String filepath) throws FileNotFoundException {
         File file = new File(filepath);
         Scanner scanner = new Scanner(file);
-        int numberOfTasks = scanner.nextInt();
+        this.readedCriterion = scanner.nextInt();
 
         ArrayList<Integer> tasksIds = new ArrayList<>();
         while (scanner.hasNextInt()) {
@@ -57,10 +58,8 @@ public class Validator {
         return tasksIds;
     }
 
-    private void readSolutions() throws FileNotFoundException {
-        Integer[] indexesArray = {132203, 132325, 136558, 136674, 136698, 136704, 136748, 136751, 136760, 136800, 136809, 142192};
-        ArrayList<Integer> indexes = new ArrayList<>(Arrays.asList(indexesArray));
-        for (int index : indexes) {
+    private void readDummySolutions() throws FileNotFoundException {
+        for (int index : Main.indexesArray) {
             for (int size = 50; size <= 500; size += 50) {
                 ArrayList<Integer> tasksIds = readOneSolution("filesOutputDummyAlgorithm/dummy_" + size + ".txt");
                 resultMap.put(index + "_" + size, tasksIds);
@@ -98,11 +97,31 @@ public class Validator {
         return criterion;
     }
 
-    public void runValidation() {
+    public void runValidationForDummy(int index, int size) {
         try {
             readAllInputFiles();
-            readSolutions();
-            int criterion = checkCriterion("136809", 250, true);
+            readDummySolutions();
+            int criterion = checkCriterion(String.valueOf(index), size, true);
+            System.out.println(criterion);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void runValidation(String filepath, int index, int size) {
+        try {
+            readAllInputFiles();
+//            ArrayList<Integer> tasksIds = readOneSolution("filesAlg1/out_" + index + "_" + size + ".txt");
+            ArrayList<Integer> tasksIds = readOneSolution(filepath);
+            resultMap.put(index + "_" + size, tasksIds);
+            int criterion = checkCriterion(String.valueOf(index), size, true);
+            if (criterion != readedCriterion) {
+                System.out.println("Wyliczona wartość kryterium niezgodna z odczytana z pliku!!!");
+                System.out.println("Odczytana: " + readedCriterion);
+                System.out.println("Wyliczona: " + criterion);
+                System.out.println("------------------------------------------------------------");
+                return;
+            }
             System.out.println(criterion);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

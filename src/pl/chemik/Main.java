@@ -12,11 +12,14 @@ public class Main {
 
     public static void main(String[] args) {
         Algorithm1 algorithm1 = new Algorithm1();
-
+        Validator validator1 = new Validator();
 //        new InstanceFileGenerator().generateFiles();
 //        new DummyAlgorithm().generateSolutions();
-//        new Validator().runValidation();
-        algorithm1.runAlgorithmOneForIndex(132325);
+        int indexToValidate = 136809;
+        int sizeToValidate = 500;
+        validator1.runValidationForDummy(indexToValidate, sizeToValidate);
+        validator1.runValidation("filesAlg1/" + "out_" + indexToValidate + "_" + sizeToValidate + ".txt", indexToValidate, sizeToValidate);
+//        algorithm1.runAlgorithmOneForIndex(136558);
     }
 
 
