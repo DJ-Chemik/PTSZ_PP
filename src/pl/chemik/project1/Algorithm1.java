@@ -1,4 +1,4 @@
-package pl.chemik;
+package pl.chemik.project1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -118,7 +118,7 @@ public class Algorithm1 {
     }
 
     public void generateSolutionFile() {
-        String filename = "filesAlg1/out_" + index + "_" + size + ".txt";
+        String filename = "project1/filesAlg1/out_" + index + "_" + size + ".txt";
         FileWriter writer = null;
         try {
             writer = new FileWriter(filename);
@@ -135,7 +135,7 @@ public class Algorithm1 {
     public void run(int index, int size) {
         this.index = index;
         this.size = size;
-        this.inputPath = inputPath = "filesInput/" + index + "/" + index + "_" + size + ".txt";
+        this.inputPath = inputPath = "project1/filesInput/" + index + "/" + index + "_" + size + ".txt";
         this.globalTime = 0;
         this.globalCriterion = 0;
 

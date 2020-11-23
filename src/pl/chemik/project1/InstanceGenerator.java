@@ -1,4 +1,4 @@
-package pl.chemik;
+package pl.chemik.project1;
 
 import java.util.ArrayList;
 import java.util.Random;

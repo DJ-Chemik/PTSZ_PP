@@ -1,4 +1,4 @@
-package pl.chemik;
+package pl.chemik.project1;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.IOException;
 public class DummyAlgorithm {
     public void generateSolutions() {
         for (int size = 50; size <= 500; size+=50) {
-            String filename = "filesOutputDummyAlgorithm/dummy_" + size + ".txt";
+            String filename = "project1/filesOutputDummyAlgorithm/dummy_" + size + ".txt";
             FileWriter writer = null;
             try {
                 writer = new FileWriter(filename);

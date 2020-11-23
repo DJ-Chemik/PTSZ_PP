@@ -1,4 +1,4 @@
-package pl.chemik;
+package pl.chemik.project1;
 
 public class Task {
     private int id;

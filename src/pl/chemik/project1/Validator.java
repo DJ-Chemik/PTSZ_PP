@@ -1,4 +1,7 @@
-package pl.chemik;
+package pl.chemik.project1;
+
+import pl.chemik.project1.Main;
+import pl.chemik.project1.Task;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +14,7 @@ public class Validator {
     private Map<String, ArrayList<Integer>> resultMap = new HashMap();
 
     private ArrayList<Task> readInputInstanceFile(int index, int size) throws FileNotFoundException {
-        String filepath = "filesInput/" + index + "/" + index + "_" + size + ".txt";
+        String filepath = "project1/filesInput/" + index + "/" + index + "_" + size + ".txt";
         File file = new File(filepath);
         Scanner scanner = new Scanner(file);
         int numberOfTasks = scanner.nextInt();
@@ -61,7 +64,7 @@ public class Validator {
     private void readDummySolutions() throws FileNotFoundException {
         for (int index : Main.indexesArray) {
             for (int size = 50; size <= 500; size += 50) {
-                ArrayList<Integer> tasksIds = readOneSolution("filesOutputDummyAlgorithm/dummy_" + size + ".txt");
+                ArrayList<Integer> tasksIds = readOneSolution("project1/filesOutputDummyAlgorithm/dummy_" + size + ".txt");
                 resultMap.put(index + "_" + size, tasksIds);
             }
         }
@@ -111,7 +114,7 @@ public class Validator {
     public void runValidation(String filepath, int index, int size) {
         try {
             readAllInputFiles();
-//            ArrayList<Integer> tasksIds = readOneSolution("filesAlg1/out_" + index + "_" + size + ".txt");
+//            ArrayList<Integer> tasksIds = readOneSolution("project1/filesAlg1/out_" + index + "_" + size + ".txt");
             ArrayList<Integer> tasksIds = readOneSolution(filepath);
             resultMap.put(index + "_" + size, tasksIds);
             int criterion = checkCriterion(String.valueOf(index), size, true);

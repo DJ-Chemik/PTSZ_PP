@@ -1,7 +1,4 @@
-package pl.chemik;
-
-import java.io.*;
-import java.util.ArrayList;
+package pl.chemik.project1;
 
 public class Main {
 
@@ -15,11 +12,13 @@ public class Main {
         Validator validator1 = new Validator();
 //        new InstanceFileGenerator().generateFiles();
 //        new DummyAlgorithm().generateSolutions();
-        int indexToValidate = 136809;
-        int sizeToValidate = 500;
-        validator1.runValidationForDummy(indexToValidate, sizeToValidate);
-        validator1.runValidation("filesAlg1/" + "out_" + indexToValidate + "_" + sizeToValidate + ".txt", indexToValidate, sizeToValidate);
-//        algorithm1.runAlgorithmOneForIndex(136558);
+
+//        int indexToValidate = 136809;
+//        int sizeToValidate = 500;
+//        validator1.runValidationForDummy(indexToValidate, sizeToValidate);
+//        validator1.runValidation("project1/filesAlg1/" + "out_" + indexToValidate + "_" + sizeToValidate + ".txt", indexToValidate, sizeToValidate);
+
+        algorithm1.runAlgorithmOneForIndex(136809);
     }
 
 

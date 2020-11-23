@@ -1,6 +1,5 @@
-package pl.chemik;
+package pl.chemik.project1;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class InstanceFileGenerator {
         InstanceGenerator instanceGenerator = new InstanceGenerator();
         instanceSizes.forEach(instanceSize -> {
             ArrayList<Task> tasks = instanceGenerator.generateInstances(instanceSize);
-            String filename = "instances/136809_" + instanceSize + ".txt";
+            String filename = "project1/instances/136809_" + instanceSize + ".txt";
             try {
                 FileWriter writer = new FileWriter(filename);
                 writer.write(instanceSize + "\n" );
