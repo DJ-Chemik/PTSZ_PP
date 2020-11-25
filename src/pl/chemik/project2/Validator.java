@@ -80,7 +80,7 @@ public class Validator {
         scanner.close();
     }
 
-    private void calculateCriterion(int size, boolean isTestFile) {
+    private void calculateCriterion(int index, int size, boolean isTestFile) {
         int criterion = 0;
         int machineNumber = 0;
         for (ArrayList<Integer> machine : tasksIdsInMachine) {
@@ -96,7 +96,7 @@ public class Validator {
         }
         calculatedCriterion = criterion / size;
         if (isTestFile) {
-            System.out.println("Wartość kryterium wynosi: " + calculatedCriterion);
+            System.out.println("Kryterium dla "+ index + " (" + size + "): " + calculatedCriterion);
         } else {
             if (calculatedCriterion != readedCriterion) {
                 System.out.println("Wyliczona wartość kryterium niezgodna z odczytana z pliku!!!");
@@ -104,7 +104,7 @@ public class Validator {
                 System.out.println("Wyliczona: " + calculatedCriterion);
                 System.out.println("------------------------------------------------------------");
             } else {
-                System.out.println("Wartość kryterium wynosi: " + calculatedCriterion);
+                System.out.println("Kryterium dla "+ index + " (" + size + "): " + calculatedCriterion);
             }
         }
     }
@@ -112,11 +112,12 @@ public class Validator {
     private void checkSolution(int index, int size, boolean isTestFile) throws FileNotFoundException {
         readInputFile(index, size);
         readOneSolution(index, size, isTestFile);
-        calculateCriterion(size, isTestFile);
+        calculateCriterion(index, size, isTestFile);
 
     }
 
     public void runValidationForIndexWithSize(int index, int size, boolean isTestFile) {
+        reset();
         try {
             checkSolution(index, size, isTestFile);
         } catch (FileNotFoundException e) {
@@ -125,9 +126,8 @@ public class Validator {
     }
 
     public void runValidation(int index, boolean isTestFile) {
-//        for (int size : Project2.sizesArray) {
-//            runValidationForIndexWithSize(index, size, isTestFile);
-//        }
-        runValidationForIndexWithSize(index, 50, isTestFile);
+        for (int size : Project2.sizesArray) {
+            runValidationForIndexWithSize(index, size, isTestFile);
+        }
     }
 }
