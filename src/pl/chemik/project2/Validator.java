@@ -8,11 +8,10 @@ import java.util.Scanner;
 public class Validator {
     private int readedCriterion;
     private int calculatedCriterion;
-    private ArrayList<Integer> tasksIdsInMachine1;
-    private ArrayList<Integer> tasksIdsInMachine2;
-    private ArrayList<Integer> tasksIdsInMachine3;
-    private ArrayList<Integer> tasksIdsInMachine4;
-    private ArrayList<Integer> tasksIdsInMachine5;
+    private ArrayList<Float> speadOfMachines;
+    private ArrayList<Task> tasks;
+
+    private ArrayList<ArrayList<Integer>> tasksIdsInMachine;
 
     public Validator() {
         reset();
@@ -21,12 +20,41 @@ public class Validator {
     private void reset() {
         readedCriterion = 0;
         calculatedCriterion = 0;
-        tasksIdsInMachine1 = new ArrayList<>();
-        tasksIdsInMachine2 = new ArrayList<>();
-        tasksIdsInMachine3 = new ArrayList<>();
-        tasksIdsInMachine4 = new ArrayList<>();
-        tasksIdsInMachine5 = new ArrayList<>();
+        tasks = new ArrayList<>();
+        speadOfMachines = new ArrayList<>();
+        tasksIdsInMachine = new ArrayList<>();
+        tasksIdsInMachine.add(new ArrayList<>());
+        tasksIdsInMachine.add(new ArrayList<>());
+        tasksIdsInMachine.add(new ArrayList<>());
+        tasksIdsInMachine.add(new ArrayList<>());
+        tasksIdsInMachine.add(new ArrayList<>());
+    }
 
+    private void readInputFile(int index, int size) throws FileNotFoundException {
+        String filepath = "project2/input/" + index + "/" + index + "_" + size + ".txt";
+        File file = new File(filepath);
+        Scanner scanner = new Scanner(file);
+        int numberOfTasks = scanner.nextInt();
+        if (numberOfTasks != size) {
+            System.out.println("Odczytana wartość ilosci zadań niezgodne z tą co powinna być!");
+            throw new FileNotFoundException();
+        }
+
+        for (int i = 0; i < 5; i++) {
+            String speed = scanner.next();
+            float speedFloat = Float.parseFloat(speed);
+            speadOfMachines.add(speedFloat);
+        }
+
+        int i = 1;
+        while (scanner.hasNextInt()) {
+            int p = scanner.nextInt();
+            int r = scanner.nextInt();
+            Task task = new Task(i,p,r);
+            tasks.add(task);
+            i++;
+        }
+        scanner.close();
     }
 
     private void readOneSolution(int index, int size, boolean isTestFile) throws FileNotFoundException {
@@ -40,38 +68,66 @@ public class Validator {
         Scanner scanner = new Scanner(file);
         this.readedCriterion = scanner.nextInt();
         scanner.nextLine(); // to read all rubbish signs
-        int actualMachine = 1;
+        int actualMachine = 0;
         while (scanner.hasNextLine()) {
             String[] line = scanner.nextLine().split(" ");
             for (String sign : line) {
                 int id = Integer.parseInt(sign);
-                if (actualMachine == 1) {
-                    tasksIdsInMachine1.add(id);
-                } else if (actualMachine == 2) {
-                    tasksIdsInMachine2.add(id);
-                } else if (actualMachine == 3) {
-                    tasksIdsInMachine3.add(id);
-                } else if (actualMachine == 4) {
-                    tasksIdsInMachine4.add(id);
-                } else if (actualMachine == 5) {
-                    tasksIdsInMachine5.add(id);
-                }
+                tasksIdsInMachine.get(actualMachine).add(id);
             }
             actualMachine++;
         }
         scanner.close();
     }
 
-    private void checkSolution() {
+    private void calculateCriterion(int size, boolean isTestFile) {
+        int criterion = 0;
+        int machineNumber = 0;
+        for (ArrayList<Integer> machine : tasksIdsInMachine) {
+            float time = 0; //TODO Możliwe że czas ma być floatem lub intem
+            for (int taskId: machine) {
+                Task task = tasks.stream().filter(task1 -> task1.getId() == taskId).findFirst().get();
+                if (time < task.getR()) {
+                    time = task.getR();
+                }
+                time += task.getP() / speadOfMachines.get(machineNumber);
+                criterion += (time - task.getR());
+            }
+        }
+        calculatedCriterion = criterion / size;
+        if (isTestFile) {
+            System.out.println("Wartość kryterium wynosi: " + calculatedCriterion);
+        } else {
+            if (calculatedCriterion != readedCriterion) {
+                System.out.println("Wyliczona wartość kryterium niezgodna z odczytana z pliku!!!");
+                System.out.println("Odczytana: " + readedCriterion);
+                System.out.println("Wyliczona: " + calculatedCriterion);
+                System.out.println("------------------------------------------------------------");
+            } else {
+                System.out.println("Wartość kryterium wynosi: " + calculatedCriterion);
+            }
+        }
+    }
+
+    private void checkSolution(int index, int size, boolean isTestFile) throws FileNotFoundException {
+        readInputFile(index, size);
+        readOneSolution(index, size, isTestFile);
+        calculateCriterion(size, isTestFile);
 
     }
 
-    public void runValidation() {
+    public void runValidationForIndexWithSize(int index, int size, boolean isTestFile) {
         try {
-            readOneSolution(0, 50, true);
-            tasksIdsInMachine3.forEach(task -> System.out.println(task));
+            checkSolution(index, size, isTestFile);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void runValidation(int index, boolean isTestFile) {
+//        for (int size : Project2.sizesArray) {
+//            runValidationForIndexWithSize(index, size, isTestFile);
+//        }
+        runValidationForIndexWithSize(index, 50, isTestFile);
     }
 }

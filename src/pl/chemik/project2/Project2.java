@@ -8,7 +8,7 @@ public class Project2 {
 
     public static void main(String[] args) {
 //        new InstanceGenerator().generate();
-        new Validator().runValidation();
+        new Validator().runValidation(136809, true);
     }
 
 }
