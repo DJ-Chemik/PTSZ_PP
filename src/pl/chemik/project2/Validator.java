@@ -50,7 +50,7 @@ public class Validator {
         while (scanner.hasNextInt()) {
             int p = scanner.nextInt();
             int r = scanner.nextInt();
-            Task task = new Task(i,p,r);
+            Task task = new Task(i, p, r);
             tasks.add(task);
             i++;
         }
@@ -84,8 +84,8 @@ public class Validator {
         int criterion = 0;
         int machineNumber = 0;
         for (ArrayList<Integer> machine : tasksIdsInMachine) {
-            float time = 0; //TODO Możliwe że czas ma być floatem lub intem
-            for (int taskId: machine) {
+            float time = 0;
+            for (int taskId : machine) {
                 Task task = tasks.stream().filter(task1 -> task1.getId() == taskId).findFirst().get();
                 if (time < task.getR()) {
                     time = task.getR();
@@ -93,10 +93,12 @@ public class Validator {
                 time += task.getP() / speadOfMachines.get(machineNumber);
                 criterion += (time - task.getR());
             }
+            machineNumber++;
         }
-        calculatedCriterion = criterion / size;
+        //TODO Takie dziwne parsowania żeby zgadzało się z wynikami ludzi którzy pisali winnych językach. Mi zawsze wychodziło o 1 mniej
+        calculatedCriterion = (int) (float) Math.ceil(criterion / (float) size);
         if (isTestFile) {
-            System.out.println("Kryterium dla "+ index + " (" + size + "): " + calculatedCriterion);
+            System.out.println("Kryterium dla " + index + " (" + size + "): " + calculatedCriterion);
         } else {
             if (calculatedCriterion != readedCriterion) {
                 System.out.println("Wyliczona wartość kryterium niezgodna z odczytana z pliku!!!");
@@ -104,7 +106,7 @@ public class Validator {
                 System.out.println("Wyliczona: " + calculatedCriterion);
                 System.out.println("------------------------------------------------------------");
             } else {
-                System.out.println("Kryterium dla "+ index + " (" + size + "): " + calculatedCriterion);
+                System.out.println("Kryterium dla " + index + " (" + size + "): " + calculatedCriterion);
             }
         }
     }
