@@ -58,8 +58,8 @@ public class Validator {
     }
 
     private void readOneSolution(int index, int size, boolean isTestFile) throws FileNotFoundException {
-        String path = "project2/output/" + index;
-        String filename = "/" + index + "_" + size + ".txt";
+        String path = "project2/output/";
+        String filename = index + "_" + size + ".txt";
         if (isTestFile) {
             path = "project2/output/test_out";
             filename = "/test_out" + "_" + size + ".txt";
@@ -101,9 +101,11 @@ public class Validator {
             System.out.println("Kryterium dla " + index + " (" + size + "): " + calculatedCriterion);
         } else {
             if (calculatedCriterion != readedCriterion) {
-                System.out.println("Wyliczona wartość kryterium niezgodna z odczytana z pliku!!!");
-                System.out.println("Odczytana: " + readedCriterion);
-                System.out.println("Wyliczona: " + calculatedCriterion);
+                System.out.println("------------------------------------------------------------");
+                System.out.println(">>> Wyliczona wartość kryterium niezgodna z odczytana z pliku!!!");
+                System.out.println(">>> Ilośc tasków: " + size + "<<<");
+                System.out.println(">>> Odczytana: " + readedCriterion);
+                System.out.println(">>> Wyliczona: " + calculatedCriterion);
                 System.out.println("------------------------------------------------------------");
             } else {
                 System.out.println("Kryterium dla " + index + " (" + size + "): " + calculatedCriterion);
