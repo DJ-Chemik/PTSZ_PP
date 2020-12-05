@@ -13,6 +13,11 @@ import java.util.Scanner;
 
 public class Algorithm2 {
 
+    private enum SORT_TASK {
+        NONE,
+        ByReadyTime,
+        ByProcessingTime,
+    }
     private int globalCriterion;
     private String inputPath;
     private ArrayList<Machine> machines;
@@ -63,18 +68,37 @@ public class Algorithm2 {
         System.out.println("");
     }
 
-    private void calculate() {
+    private void sortTasks(SORT_TASK sortOption) {
+        if (sortOption == SORT_TASK.ByReadyTime) {
+            tasks.sort((o1, o2) -> {
+                if (o1.getR() == o2.getR()) {
+                    return o1.getP() - o2.getP();
+                }
+                return o1.getR() - o2.getR();
+            });
+        }
+        if (sortOption == SORT_TASK.ByProcessingTime) {
+            tasks.sort((o1, o2) -> {
+                return o1.getP() - o2.getP();
+            });
+        }
+    }
+
+    private void sortMachinesBySpeed() {
         machines.sort((o1, o2) -> {
             int speed1 = (int) (o1.getSpeed() * 100);
             int speed2 = (int) (o2.getSpeed() * 100);
             return speed1 - speed2;
         });
-        tasks.sort((o1, o2) -> {
-            if (o1.getR() == o2.getR()) {
-                return o1.getP() - o2.getP();
-            }
-            return o1.getR() - o2.getR();
-        });
+    }
+
+    private void sortMachinesById() {
+        machines.sort(Comparator.comparingInt(Machine::getNumber));
+    }
+
+    private void calculate() {
+        sortMachinesBySpeed();
+        sortTasks(SORT_TASK.ByReadyTime);
         int lastReadyTask = -1;
         boolean shouldSchedule = true;
         float time = 0;
@@ -118,7 +142,7 @@ public class Algorithm2 {
             criterion += machines.get(machineId).getSumScheduleTime();
         }
         globalCriterion = (int) (float) Math.ceil(criterion / (float) numberOfTasks);
-        machines.sort(Comparator.comparingInt(Machine::getNumber));
+        sortMachinesById();
     }
 
     private void generateSolutionFile(int index, int size) {
