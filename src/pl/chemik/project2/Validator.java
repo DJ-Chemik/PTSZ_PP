@@ -100,7 +100,9 @@ public class Validator {
         if (isTestFile) {
             System.out.println("Kryterium dla " + index + " (" + size + "): " + calculatedCriterion);
         } else {
-            if (calculatedCriterion != readedCriterion) {
+            if (calculatedCriterion - readedCriterion == 1 || calculatedCriterion - readedCriterion == -1) {
+                System.out.println("Kryterium dla " + index + " (" + size + "): " + calculatedCriterion + "  | odczytane: " + readedCriterion);
+            } else if (calculatedCriterion != readedCriterion) {
                 System.out.println("------------------------------------------------------------");
                 System.out.println(">>> Wyliczona wartość kryterium niezgodna z odczytana z pliku!!!");
                 System.out.println(">>> Ilośc tasków: " + size + "<<<");
