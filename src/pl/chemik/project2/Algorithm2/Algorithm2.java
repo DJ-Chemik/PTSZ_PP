@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class Algorithm2 {
@@ -57,13 +58,22 @@ public class Algorithm2 {
         scanner.close();
     }
 
+    private void displaymachines() {
+        machines.forEach(machine -> System.out.printf(machine.getNumber() + "(" + machine.getSpeed() + "), "));
+        System.out.println("");
+    }
+
     private void calculate() {
-        // TODO sort machines by speed
+        machines.sort((o1, o2) -> {
+            int speed1 = (int) (o1.getSpeed() * 100);
+            int speed2 = (int) (o2.getSpeed() * 100);
+            return speed1 - speed2;
+        });
         tasks.sort((o1, o2) -> {
             if (o1.getR() == o2.getR()) {
-                return o1.getP() - o2.getP();    // TODO + or - ??? which is correct?
+                return o1.getP() - o2.getP();
             }
-            return o1.getR() - o1.getR(); // TODO + or - ??? which is correct?
+            return o1.getR() - o2.getR();
         });
         int lastReadyTask = -1;
         boolean shouldSchedule = true;
@@ -99,7 +109,7 @@ public class Algorithm2 {
             }
 
             // Check is algorithm finished
-            shouldSchedule = lastReadyTask < tasks.size() -1 || readyTasks.size() > 0;
+            shouldSchedule = lastReadyTask < tasks.size() - 1 || readyTasks.size() > 0;
             time++;
         }
 
@@ -108,7 +118,7 @@ public class Algorithm2 {
             criterion += machines.get(machineId).getSumScheduleTime();
         }
         globalCriterion = (int) (float) Math.ceil(criterion / (float) numberOfTasks);
-        // TODO sort machines by id
+        machines.sort(Comparator.comparingInt(Machine::getNumber));
     }
 
     private void generateSolutionFile(int index, int size) {
@@ -119,7 +129,7 @@ public class Algorithm2 {
             writer.write(globalCriterion + "\n");
             for (Machine machine : machines) {
                 for (int taskId : machine.getSchedule()) {
-                    writer.write(taskId + ' ');
+                    writer.write(taskId + " ");
                 }
                 writer.write('\n');
             }
