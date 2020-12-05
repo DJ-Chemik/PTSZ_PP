@@ -10,9 +10,9 @@ public class Project2 {
 
     public static void main(String[] args) {
 //        new InstanceGenerator().generate();
-//        new Validator().runValidation(136698, true);
+//        new Validator().runValidation(136760, false);
         runAlgorithmToAllIndex();
-//       new Algorithm2().run(136809);
+//       new Algorithm2().run(136760);
     }
 
     private static void runAlgorithmToAllIndex() {
