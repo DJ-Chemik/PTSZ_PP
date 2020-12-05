@@ -1,6 +1,8 @@
 package pl.chemik.project2;
 
 
+import pl.chemik.project2.Algorithm2.Algorithm2;
+
 public class Project2 {
     public static Integer[] indexesArray = {132203, 132325, 136558, 136674, 136698, 136704,
             136748, 136751, 136760, 136800, 136809, 142192};
@@ -8,7 +10,8 @@ public class Project2 {
 
     public static void main(String[] args) {
 //        new InstanceGenerator().generate();
-        new Validator().runValidation(136698, true);
+//        new Validator().runValidation(136698, true);
+        new Algorithm2().run(136809);
     }
 
 }
