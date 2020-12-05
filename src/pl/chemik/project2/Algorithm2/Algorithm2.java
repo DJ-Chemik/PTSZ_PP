@@ -122,7 +122,7 @@ public class Algorithm2 {
     }
 
     private void generateSolutionFile(int index, int size) {
-        String filename = "project2/output/out_" + index + "_" + size + ".txt";
+        String filename = "project2/output/" + index + "_" + size + ".txt";
         FileWriter writer = null;
         try {
             writer = new FileWriter(filename);
