@@ -17,8 +17,10 @@ public class Project2 {
 
     private static void runAlgorithmToAllIndex() {
         Algorithm2 algorithm2 = new Algorithm2();
+//        Validator validator = new Validator();
         for (int index : indexesArray) {
             algorithm2.run(index);
+//            validator.runValidation(index, false);
             System.out.println("-------------------------------------------");
         }
     }
