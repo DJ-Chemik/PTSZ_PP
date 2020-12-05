@@ -12,7 +12,7 @@ public class Project2 {
 //        new InstanceGenerator().generate();
 //        new Validator().runValidation(136760, false);
         runAlgorithmToAllIndex();
-//       new Algorithm2().run(136760);
+//       new Algorithm2().run(136809);
     }
 
     private static void runAlgorithmToAllIndex() {

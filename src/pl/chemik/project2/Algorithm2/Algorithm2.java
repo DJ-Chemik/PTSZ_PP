@@ -7,14 +7,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Scanner;
 
 public class Algorithm2 {
 
     private enum SORT_TASK {
         ByReadyTime,
         ByProcessingTime,
+        MixedReady,
+        MixedProcessing
     }
+
     private int globalCriterion;
     private String inputPath;
     private ArrayList<Machine> machines;
@@ -66,7 +71,7 @@ public class Algorithm2 {
     }
 
     private void sortTasks(SORT_TASK sortOption) {
-        if (sortOption == SORT_TASK.ByReadyTime) {
+        if (sortOption == SORT_TASK.MixedReady) {
             tasks.sort((o1, o2) -> {
                 if (o1.getR() == o2.getR()) {
                     return o1.getP() - o2.getP();
@@ -74,10 +79,19 @@ public class Algorithm2 {
                 return o1.getR() - o2.getR();
             });
         }
-        if (sortOption == SORT_TASK.ByProcessingTime) {
+        if (sortOption == SORT_TASK.MixedProcessing) {
             tasks.sort((o1, o2) -> {
+                if (o1.getP() == o2.getP()) {
+                    return o1.getR() - o2.getR();
+                }
                 return o1.getP() - o2.getP();
             });
+        }
+        if (sortOption == SORT_TASK.ByReadyTime) {
+            tasks.sort(Comparator.comparing(Task::getR));
+        }
+        if (sortOption == SORT_TASK.ByProcessingTime) {
+            tasks.sort(Comparator.comparingInt(Task::getP));
         }
     }
 
@@ -96,7 +110,7 @@ public class Algorithm2 {
     private void calculate() {
         sortMachinesBySpeed();
 
-        for (SORT_TASK sortType: SORT_TASK.values()) {
+        for (SORT_TASK sortType : SORT_TASK.values()) {
             ArrayList<Machine> localMachines = new ArrayList<>(machines);
             localMachines.forEach(machine -> {
                 machine.reset();
