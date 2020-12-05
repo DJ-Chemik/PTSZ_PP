@@ -3,6 +3,7 @@ package pl.chemik.project2.Algorithm2;
 import pl.chemik.project2.Project2;
 import pl.chemik.project2.Task;
 
+import javax.crypto.Mac;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Algorithm2 {
 
@@ -17,7 +19,7 @@ public class Algorithm2 {
         ByReadyTime,
         ByProcessingTime,
         MixedReady,
-        MixedProcessing
+        MixedProcessing,
     }
 
     private int globalCriterion;
@@ -110,11 +112,16 @@ public class Algorithm2 {
     private void calculate() {
         sortMachinesBySpeed();
 
+        ArrayList<Machine> emptyMachines = new ArrayList<>();
+        for (Machine machine: machines) {
+            emptyMachines.add(machine.copyMachine());
+        }
+
         for (SORT_TASK sortType : SORT_TASK.values()) {
-            ArrayList<Machine> localMachines = new ArrayList<>(machines);
-            localMachines.forEach(machine -> {
-                machine.reset();
-            });
+            ArrayList<Machine> localMachines = new ArrayList<>();
+            for (Machine emptyMachine: emptyMachines) {
+                localMachines.add(emptyMachine.copyMachine());
+            }
 
             sortTasks(sortType);
             int lastReadyTask = -1;

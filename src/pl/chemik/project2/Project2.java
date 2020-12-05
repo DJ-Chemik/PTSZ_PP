@@ -10,14 +10,14 @@ public class Project2 {
 
     public static void main(String[] args) {
 //        new InstanceGenerator().generate();
-//        new Validator().runValidation(136760, false);
+//        new Algorithm2().run(136558);
+//        new Validator().runValidation(136558, false);
         runAlgorithmToAllIndex();
-//       new Algorithm2().run(136809);
     }
 
     private static void runAlgorithmToAllIndex() {
         Algorithm2 algorithm2 = new Algorithm2();
-        for (int index: indexesArray) {
+        for (int index : indexesArray) {
             algorithm2.run(index);
             System.out.println("-------------------------------------------");
         }

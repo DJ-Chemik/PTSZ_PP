@@ -15,6 +15,10 @@ public class Machine {
         reset();
     }
 
+    public Machine copyMachine() {
+        return new Machine(this.getNumber(), this.getSpeed());
+    }
+
     public void reset() {
         this.time = 0;
         this.summaryTime = 0;
