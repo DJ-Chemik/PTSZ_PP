@@ -12,6 +12,10 @@ public class Machine {
     public Machine(int number, float speed) {
         this.number = number;
         this.speed = speed;
+        reset();
+    }
+
+    public void reset() {
         this.time = 0;
         this.summaryTime = 0;
         this.tasksIDs = new ArrayList<>();

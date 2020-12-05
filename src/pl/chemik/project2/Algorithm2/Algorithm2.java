@@ -7,14 +7,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 
 public class Algorithm2 {
 
     private enum SORT_TASK {
-        NONE,
         ByReadyTime,
         ByProcessingTime,
     }
@@ -29,7 +26,7 @@ public class Algorithm2 {
     }
 
     private void resetFields() {
-        this.globalCriterion = 0;
+        this.globalCriterion = 999999999;
         this.numberOfTasks = 0;
         machines = new ArrayList<>();
         this.tasks = new ArrayList<>();
@@ -98,50 +95,62 @@ public class Algorithm2 {
 
     private void calculate() {
         sortMachinesBySpeed();
-        sortTasks(SORT_TASK.ByReadyTime);
-        int lastReadyTask = -1;
-        boolean shouldSchedule = true;
-        float time = 0;
-        ArrayList<Task> readyTasks = new ArrayList<>();
 
-        while (shouldSchedule) {
-            // Update Ready tasks
-            for (int i = lastReadyTask + 1; i < tasks.size() && tasks.get(i).getR() <= time; i++) {
-                readyTasks.add(tasks.get(i));
-                lastReadyTask++;
-            }
+        for (SORT_TASK sortType: SORT_TASK.values()) {
+            ArrayList<Machine> localMachines = new ArrayList<>(machines);
+            localMachines.forEach(machine -> {
+                machine.reset();
+            });
 
-            // Add new task to each machine
-            for (int machineID = 0; machineID < machines.size(); machineID++) {
-                Machine machine = machines.get(machineID);
-                boolean isMachineReady = machine.getTime() <= time + 1;
-                if (!isMachineReady || readyTasks.size() == 0) {
-                    continue;
+            sortTasks(sortType);
+            int lastReadyTask = -1;
+            boolean shouldSchedule = true;
+            float time = 0;
+            ArrayList<Task> readyTasks = new ArrayList<>();
+
+            while (shouldSchedule) {
+                // Update Ready tasks
+                for (int i = lastReadyTask + 1; i < tasks.size() && tasks.get(i).getR() <= time; i++) {
+                    readyTasks.add(tasks.get(i));
+                    lastReadyTask++;
                 }
 
-                // Add task to machine
-                Task nextTask = readyTasks.get(0);
-                machine.addTaskToSchedule(nextTask.getId());
-                if (machine.getTime() < nextTask.getR()) {
-                    machine.setTime(nextTask.getR());
+                // Add new task to each machine
+                for (int machineID = 0; machineID < localMachines.size(); machineID++) {
+                    Machine machine = localMachines.get(machineID);
+                    boolean isMachineReady = machine.getTime() <= time + 1;
+                    if (!isMachineReady || readyTasks.size() == 0) {
+                        continue;
+                    }
+
+                    // Add task to machine
+                    Task nextTask = readyTasks.get(0);
+                    machine.addTaskToSchedule(nextTask.getId());
+                    if (machine.getTime() < nextTask.getR()) {
+                        machine.setTime(nextTask.getR());
+                    }
+                    float newMachineTime = nextTask.getP() / machine.getSpeed();
+                    machine.addTime(newMachineTime);
+                    machine.addSumScheduleTime(machine.getTime() - nextTask.getR());
+                    // Delete task from ready tasks (because of it is assigned to machine)
+                    readyTasks.remove(nextTask);
                 }
-                float newMachineTime = nextTask.getP() / machine.getSpeed();
-                machine.addTime(newMachineTime);
-                machine.addSumScheduleTime(machine.getTime() - nextTask.getR());
-                // Delete task from ready tasks (because of it is assigned to machine)
-                readyTasks.remove(nextTask);
+
+                // Check is algorithm finished
+                shouldSchedule = lastReadyTask < tasks.size() - 1 || readyTasks.size() > 0;
+                time++;
             }
 
-            // Check is algorithm finished
-            shouldSchedule = lastReadyTask < tasks.size() - 1 || readyTasks.size() > 0;
-            time++;
+            float criterion = 0;
+            for (int machineId = 0; machineId < localMachines.size(); machineId++) {
+                criterion += localMachines.get(machineId).getSummaryTime();
+            }
+            int resultLocalCriterion = (int) (float) Math.ceil(criterion / (float) numberOfTasks);
+            if (resultLocalCriterion < globalCriterion) {
+                globalCriterion = resultLocalCriterion;
+                machines = localMachines;
+            }
         }
-
-        float criterion = 0;
-        for (int machineId = 0; machineId < machines.size(); machineId++) {
-            criterion += machines.get(machineId).getSummaryTime();
-        }
-        globalCriterion = (int) (float) Math.ceil(criterion / (float) numberOfTasks);
         sortMachinesById();
     }
 
