@@ -3,7 +3,6 @@ package pl.chemik.project2.Algorithm2;
 import pl.chemik.project2.Project2;
 import pl.chemik.project2.Task;
 
-import javax.crypto.Mac;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -11,15 +10,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Algorithm2 {
 
     private enum SORT_TASK {
-        ByReadyTime,
-        ByProcessingTime,
         MixedReady,
         MixedProcessing,
+        ByReadyTime,
+        ByProcessingTime,
     }
 
     private int globalCriterion;
@@ -113,13 +111,13 @@ public class Algorithm2 {
         sortMachinesBySpeed();
 
         ArrayList<Machine> emptyMachines = new ArrayList<>();
-        for (Machine machine: machines) {
+        for (Machine machine : machines) {
             emptyMachines.add(machine.copyMachine());
         }
 
         for (SORT_TASK sortType : SORT_TASK.values()) {
             ArrayList<Machine> localMachines = new ArrayList<>();
-            for (Machine emptyMachine: emptyMachines) {
+            for (Machine emptyMachine : emptyMachines) {
                 localMachines.add(emptyMachine.copyMachine());
             }
 
@@ -167,9 +165,13 @@ public class Algorithm2 {
                 criterion += localMachines.get(machineId).getSummaryTime();
             }
             int resultLocalCriterion = (int) (float) Math.ceil(criterion / (float) numberOfTasks);
+
             if (resultLocalCriterion < globalCriterion) {
+//                System.out.println(sortType + " >>>> " + resultLocalCriterion + " < " + globalCriterion);
                 globalCriterion = resultLocalCriterion;
                 machines = localMachines;
+            } else {
+//                System.out.println(sortType + " >>>> " + resultLocalCriterion + " > " + globalCriterion);
             }
         }
         sortMachinesById();
