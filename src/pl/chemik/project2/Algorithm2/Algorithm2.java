@@ -139,7 +139,7 @@ public class Algorithm2 {
 
         float criterion = 0;
         for (int machineId = 0; machineId < machines.size(); machineId++) {
-            criterion += machines.get(machineId).getSumScheduleTime();
+            criterion += machines.get(machineId).getSummaryTime();
         }
         globalCriterion = (int) (float) Math.ceil(criterion / (float) numberOfTasks);
         sortMachinesById();
@@ -152,7 +152,7 @@ public class Algorithm2 {
             writer = new FileWriter(filename);
             writer.write(globalCriterion + "\n");
             for (Machine machine : machines) {
-                for (int taskId : machine.getSchedule()) {
+                for (int taskId : machine.getTasksIDs()) {
                     writer.write(taskId + " ");
                 }
                 writer.write('\n');

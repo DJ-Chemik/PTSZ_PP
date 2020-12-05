@@ -1,22 +1,20 @@
 package pl.chemik.project2.Algorithm2;
 
-import pl.chemik.project2.Task;
-
 import java.util.ArrayList;
 
 public class Machine {
     private int number;
     private float speed;
     private float time;
-    private float sumScheduleTime;
-    private ArrayList<Integer> schedule;
+    private float summaryTime;
+    private ArrayList<Integer> tasksIDs;
 
     public Machine(int number, float speed) {
         this.number = number;
         this.speed = speed;
         this.time = 0;
-        this.sumScheduleTime = 0;
-        this.schedule = new ArrayList<>();
+        this.summaryTime = 0;
+        this.tasksIDs = new ArrayList<>();
     }
 
     public int getNumber() {
@@ -39,19 +37,19 @@ public class Machine {
         this.time += time;
     }
 
-    public float getSumScheduleTime() {
-        return sumScheduleTime;
+    public float getSummaryTime() {
+        return summaryTime;
     }
 
     public void addSumScheduleTime(float sumScheduleTime) {
-        this.sumScheduleTime += sumScheduleTime;
+        this.summaryTime += sumScheduleTime;
     }
 
     public void addTaskToSchedule(int taskId) {
-        schedule.add(taskId);
+        tasksIDs.add(taskId);
     }
 
-    public ArrayList<Integer> getSchedule() {
-        return schedule;
+    public ArrayList<Integer> getTasksIDs() {
+        return tasksIDs;
     }
 }
