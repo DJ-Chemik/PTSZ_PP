@@ -14,8 +14,6 @@ import java.util.Scanner;
 public class Algorithm2 {
 
     private enum SORT_TASK {
-        MixedReady,
-        MixedProcessing,
         ByReadyTime,
         ByProcessingTime,
     }
@@ -71,7 +69,7 @@ public class Algorithm2 {
     }
 
     private void sortTasks(SORT_TASK sortOption) {
-        if (sortOption == SORT_TASK.MixedReady) {
+        if (sortOption == SORT_TASK.ByReadyTime) {
             tasks.sort((o1, o2) -> {
                 if (o1.getR() == o2.getR()) {
                     return o1.getP() - o2.getP();
@@ -79,19 +77,13 @@ public class Algorithm2 {
                 return o1.getR() - o2.getR();
             });
         }
-        if (sortOption == SORT_TASK.MixedProcessing) {
+        if (sortOption == SORT_TASK.ByProcessingTime) {
             tasks.sort((o1, o2) -> {
                 if (o1.getP() == o2.getP()) {
                     return o1.getR() - o2.getR();
                 }
                 return o1.getP() - o2.getP();
             });
-        }
-        if (sortOption == SORT_TASK.ByReadyTime) {
-            tasks.sort(Comparator.comparing(Task::getR));
-        }
-        if (sortOption == SORT_TASK.ByProcessingTime) {
-            tasks.sort(Comparator.comparingInt(Task::getP));
         }
     }
 
