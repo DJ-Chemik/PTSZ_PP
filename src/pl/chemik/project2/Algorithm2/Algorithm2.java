@@ -114,16 +114,16 @@ public class Algorithm2 {
             }
 
             sortTasks(sortType);
-            int lastReadyTask = -1;
+            int numberOfScheduledTasks = 0;
             boolean shouldSchedule = true;
             float time = 0;
             ArrayList<Task> readyTasks = new ArrayList<>();
 
             while (shouldSchedule) {
                 // Update Ready tasks
-                for (int i = lastReadyTask + 1; i < tasks.size() && tasks.get(i).getR() <= time; i++) {
+                for (int i = numberOfScheduledTasks; i < tasks.size() && tasks.get(i).getR() <= time; i++) {
                     readyTasks.add(tasks.get(i));
-                    lastReadyTask++;
+                    numberOfScheduledTasks++;
                 }
 
                 // Add new task to each machine
@@ -148,7 +148,7 @@ public class Algorithm2 {
                 }
 
                 // Check is algorithm finished
-                shouldSchedule = lastReadyTask < tasks.size() - 1 || readyTasks.size() > 0;
+                shouldSchedule = numberOfScheduledTasks < tasks.size() || readyTasks.size() > 0;
                 time++;
             }
 
