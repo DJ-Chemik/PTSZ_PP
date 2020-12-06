@@ -16,6 +16,7 @@ public class Algorithm2 {
     private enum SORT_TASK {
         ByReadyTime,
         ByProcessingTime,
+        ByEndTime
     }
 
     private int globalCriterion;
@@ -83,6 +84,13 @@ public class Algorithm2 {
                     return o1.getR() - o2.getR();
                 }
                 return o1.getP() - o2.getP();
+            });
+        }
+        if (sortOption == SORT_TASK.ByEndTime) {
+            tasks.sort((o1, o2) -> {
+                int end1 = o1.getR() + o1.getP();
+                int end2 = o2.getR() + o2.getP();
+                return end1 - end2;
             });
         }
     }
