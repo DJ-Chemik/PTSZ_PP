@@ -16,7 +16,9 @@ public class Algorithm2 {
     private enum SORT_TASK {
         ByReadyTime,
         ByProcessingTime,
-        ByEndTime
+        ByEndTime,
+        ByEndTimeWithDoubleR,
+        ByEndTimeWithDoubleP,
     }
 
     private int globalCriterion;
@@ -91,6 +93,20 @@ public class Algorithm2 {
                 int end1 = o1.getR() + o1.getP();
                 int end2 = o2.getR() + o2.getP();
                 return end1 - end2;
+            });
+        }
+        if (sortOption == SORT_TASK.ByEndTimeWithDoubleR) {
+            tasks.sort((o1, o2) -> {
+                int test1 = o1.getR()*2 + o1.getP();
+                int test2 = o2.getR()*2 + o2.getP();
+                return test1 - test2;
+            });
+        }
+        if (sortOption == SORT_TASK.ByEndTimeWithDoubleP) {
+            tasks.sort((o1, o2) -> {
+                int test1 = o1.getR() + o1.getP()*2;
+                int test2 = o2.getR() + o2.getP()*2;
+                return test1 - test2;
             });
         }
     }

@@ -10,17 +10,19 @@ public class Project2 {
 
     public static void main(String[] args) {
 //        new InstanceGenerator().generate();
-        runAlgorithmToAllIndex();
+        runAlgorithmToAllIndex(false);
 //        new Algorithm2().run(132203);
 //        new Validator().runValidation(132203, false);
     }
 
-    private static void runAlgorithmToAllIndex() {
+    private static void runAlgorithmToAllIndex(boolean withValidation) {
         Algorithm2 algorithm2 = new Algorithm2();
-//        Validator validator = new Validator();
+        Validator validator = new Validator();
         for (int index : indexesArray) {
             algorithm2.run(index);
-//            validator.runValidation(index, false);
+            if (withValidation) {
+                validator.runValidation(index, false);
+            }
             System.out.println("-------------------------------------------");
         }
     }
