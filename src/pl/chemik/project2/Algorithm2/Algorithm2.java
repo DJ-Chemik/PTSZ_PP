@@ -17,8 +17,17 @@ public class Algorithm2 {
         ByReadyTime,
         ByProcessingTime,
         ByEndTime,
-        ByEndTimeWithDoubleR,
-        ByEndTimeWithDoubleP,
+        ByEndTime_2R_1P,
+        ByEndTime_1R_2P,
+        ByEndTime_3R_1P,
+        ByEndTime_1R_3P,
+        ByEndTime_2R_3P,
+        ByEndTime_1R_5P,
+        ByEndTime_2R_7P,
+        ByEndTime_1R_7P,
+        ByEndTime_1R_9P,
+        ByEndTime_1R_10P,
+        ByEndTime_1R_20P,
     }
 
     private int globalCriterion;
@@ -95,17 +104,81 @@ public class Algorithm2 {
                 return end1 - end2;
             });
         }
-        if (sortOption == SORT_TASK.ByEndTimeWithDoubleR) {
+        if (sortOption == SORT_TASK.ByEndTime_2R_1P) {
             tasks.sort((o1, o2) -> {
                 int test1 = o1.getR()*2 + o1.getP();
                 int test2 = o2.getR()*2 + o2.getP();
                 return test1 - test2;
             });
         }
-        if (sortOption == SORT_TASK.ByEndTimeWithDoubleP) {
+        if (sortOption == SORT_TASK.ByEndTime_1R_2P) {
             tasks.sort((o1, o2) -> {
                 int test1 = o1.getR() + o1.getP()*2;
                 int test2 = o2.getR() + o2.getP()*2;
+                return test1 - test2;
+            });
+        }
+        if (sortOption == SORT_TASK.ByEndTime_1R_3P) {
+            tasks.sort((o1, o2) -> {
+                int test1 = o1.getR() + o1.getP()*3;
+                int test2 = o2.getR() + o2.getP()*3;
+                return test1 - test2;
+            });
+        }
+        if (sortOption == SORT_TASK.ByEndTime_1R_5P) {
+            tasks.sort((o1, o2) -> {
+                int test1 = o1.getR() + o1.getP()*5;
+                int test2 = o2.getR() + o2.getP()*5;
+                return test1 - test2;
+            });
+        }
+        // To poprawiło tylko 1 wynik
+        if (sortOption == SORT_TASK.ByEndTime_3R_1P) {
+            tasks.sort((o1, o2) -> {
+                int test1 = o1.getR()*3 + o1.getP();
+                int test2 = o2.getR()*3 + o2.getP();
+                return test1 - test2;
+            });
+        }
+        if (sortOption == SORT_TASK.ByEndTime_2R_3P) {
+            tasks.sort((o1, o2) -> {
+                int test1 = o1.getR()*2 + o1.getP()*3;
+                int test2 = o2.getR()*2 + o2.getP()*3;
+                return test1 - test2;
+            });
+        }
+        if (sortOption == SORT_TASK.ByEndTime_2R_7P) {
+            tasks.sort((o1, o2) -> {
+                int test1 = o1.getR()*2 + o1.getP()*7;
+                int test2 = o2.getR()*2 + o2.getP()*7;
+                return test1 - test2;
+            });
+        }
+        if (sortOption == SORT_TASK.ByEndTime_1R_7P) {
+            tasks.sort((o1, o2) -> {
+                int test1 = o1.getR() + o1.getP()*7;
+                int test2 = o2.getR() + o2.getP()*7;
+                return test1 - test2;
+            });
+        }
+        if (sortOption == SORT_TASK.ByEndTime_1R_9P) {
+            tasks.sort((o1, o2) -> {
+                int test1 = o1.getR()*1 + o1.getP()*9;
+                int test2 = o2.getR()*1 + o2.getP()*9;
+                return test1 - test2;
+            });
+        }
+        if (sortOption == SORT_TASK.ByEndTime_1R_10P) {
+            tasks.sort((o1, o2) -> {
+                int test1 = o1.getR()*1 + o1.getP()*10;
+                int test2 = o2.getR()*1 + o2.getP()*10;
+                return test1 - test2;
+            });
+        }
+        if (sortOption == SORT_TASK.ByEndTime_1R_20P) {
+            tasks.sort((o1, o2) -> {
+                int test1 = o1.getR()*1 + o1.getP()*20;
+                int test2 = o2.getR()*1 + o2.getP()*20;
                 return test1 - test2;
             });
         }
