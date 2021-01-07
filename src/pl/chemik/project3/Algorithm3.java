@@ -75,8 +75,8 @@ public class Algorithm3 {
             try {
                 writer = new FileWriter(filename);
                 writer.write(0 + "\n");
-                for (int i = 1; i <= numberOfTasks; i++) {
-                    writer.write(i + " ");
+                for (int i = 1; i <= size; i++) {
+                    writer.write( i + " ");
                 }
                 writer.close();
             } catch (IOException e) {
