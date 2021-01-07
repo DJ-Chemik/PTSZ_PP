@@ -18,7 +18,7 @@ public class Algorithm3 {
     }
 
     private void resetFields() {
-//        this.globalCriterion = 999999999; //todo
+        this.globalCriterion = 999999999;
         this.numberOfTasks = 0;
         this.tasks = new ArrayList<>();
     }
@@ -52,20 +52,17 @@ public class Algorithm3 {
 
     private void generateSolutionFile(int index, int size) {
         String filename = "project3/output/" + index + "_" + size + ".txt";
-//        FileWriter writer = null;
-//        try {
-//            writer = new FileWriter(filename);
-//            writer.write(globalCriterion + "\n");
-//            for (Machine machine : machines) {
-//                for (int taskId : machine.getTasksIDs()) {
-//                    writer.write(taskId + " ");
-//                }
-//                writer.write('\n');
-//            }
-//            writer.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(filename);
+            writer.write(globalCriterion + "\n");
+            for (Task task: tasks) {
+                writer.write( task.getId() + " ");
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void generateDummySolutionFile() {
