@@ -8,10 +8,10 @@ public class Project3 {
 
     public static void main(String[] args) {
 //        new InstanceGenerator().generate();
-        new Algorithm3().generateDummySolutionFile();
+//        new Algorithm3().generateDummySolutionFile();
 //        runAlgorithmToAllIndex(false);
 //        new Algorithm3().run(132203);
-//        new Validator().runValidation(132203, false);
+        new Validator().runValidation(136809, true);
     }
 
 //    private static void runAlgorithmToAllIndex(boolean withValidation) {
