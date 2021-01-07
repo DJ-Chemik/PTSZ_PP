@@ -95,6 +95,8 @@ public class Validator {
             }
             machineNumber++;
         }
+
+
         //TODO Takie dziwne parsowania żeby zgadzało się z wynikami ludzi którzy pisali winnych językach. Mi zawsze wychodziło o 1 mniej
         calculatedCriterion = (int) (float) Math.ceil(criterion / (float) size);
         if (isTestFile) {

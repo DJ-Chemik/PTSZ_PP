@@ -81,6 +81,8 @@ public class Algorithm2 {
     }
 
     private void sortTasks(SORT_TASK sortOption) {
+
+
         if (sortOption == SORT_TASK.ByReadyTime) {
             tasks.sort((o1, o2) -> {
                 if (o1.getR() == o2.getR()) {
@@ -89,6 +91,8 @@ public class Algorithm2 {
                 return o1.getR() - o2.getR();
             });
         }
+
+
         if (sortOption == SORT_TASK.ByProcessingTime) {
             tasks.sort((o1, o2) -> {
                 if (o1.getP() == o2.getP()) {
@@ -97,6 +101,8 @@ public class Algorithm2 {
                 return o1.getP() - o2.getP();
             });
         }
+
+
         if (sortOption == SORT_TASK.ByEndTime) {
             tasks.sort((o1, o2) -> {
                 int end1 = o1.getR() + o1.getP();
@@ -104,6 +110,8 @@ public class Algorithm2 {
                 return end1 - end2;
             });
         }
+
+
         if (sortOption == SORT_TASK.ByEndTime_2R_1P) {
             tasks.sort((o1, o2) -> {
                 int test1 = o1.getR()*2 + o1.getP();
@@ -205,18 +213,22 @@ public class Algorithm2 {
         }
 
         for (SORT_TASK sortType : SORT_TASK.values()) {
+
             ArrayList<Machine> localMachines = new ArrayList<>();
             for (Machine emptyMachine : emptyMachines) {
                 localMachines.add(emptyMachine.copyMachine());
             }
 
             sortTasks(sortType);
+
+
             int numberOfScheduledTasks = 0;
             boolean shouldSchedule = true;
             float time = 0;
             ArrayList<Task> readyTasks = new ArrayList<>();
 
             while (shouldSchedule) {
+
                 // Update Ready tasks
                 for (int i = numberOfScheduledTasks; i < tasks.size() && tasks.get(i).getR() <= time; i++) {
                     readyTasks.add(tasks.get(i));
@@ -234,10 +246,13 @@ public class Algorithm2 {
                     // Add task to machine
                     Task nextTask = readyTasks.get(0);
                     machine.addTaskToSchedule(nextTask.getId());
+
                     if (machine.getTime() < nextTask.getR()) {
                         machine.setTime(nextTask.getR());
                     }
+
                     float newMachineTime = nextTask.getP() / machine.getSpeed();
+
                     machine.addTime(newMachineTime);
                     machine.addSumScheduleTime(machine.getTime() - nextTask.getR());
                     // Delete task from ready tasks (because of it is assigned to machine)
