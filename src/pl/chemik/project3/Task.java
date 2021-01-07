@@ -11,6 +11,16 @@ public class Task {
     public Task() {
     }
 
+    public Task(int id, int p1, int p2, int p3, int d, int w) {
+        this.id = id;
+        this.d = d;
+        this.w = w;
+        this.p = new ArrayList<>();
+        this.p.add(p1);
+        this.p.add(p2);
+        this.p.add(p3);
+    }
+
     public int getId() {
         return id;
     }

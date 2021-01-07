@@ -7,7 +7,8 @@ public class Project3 {
     public static Integer[] sizesArray = {50, 100, 150, 200, 250, 300, 350, 400, 450, 500};
 
     public static void main(String[] args) {
-        new InstanceGenerator().generate();
+//        new InstanceGenerator().generate();
+        new Algorithm3().generateDummySolutionFile();
 //        runAlgorithmToAllIndex(false);
 //        new Algorithm3().run(132203);
 //        new Validator().runValidation(132203, false);
