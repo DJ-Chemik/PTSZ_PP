@@ -10,8 +10,9 @@ public class Project3 {
 //        new InstanceGenerator().generate();
 //        new Algorithm3().generateDummySolutionFile();
 //        runAlgorithmToAllIndex(false);
-//        new Algorithm3().run(132203);
-        new Validator().runValidation(136809, true);
+        new Algorithm3().run(136698);
+//        new Algorithm3().runForIndexWithSize(136698, 500);
+//        new Validator().runValidation(136809, true);
     }
 
 //    private static void runAlgorithmToAllIndex(boolean withValidation) {

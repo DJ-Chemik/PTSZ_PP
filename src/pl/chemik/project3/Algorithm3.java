@@ -5,14 +5,30 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Algorithm3 {
 
+    private enum SORT_TASK {
+        A,
+        B,
+        C,
+        D,
+        E,
+        F,
+        G,
+        H,
+        I,
+        J,
+        K,
+        L
+    }
+
     private String inputPath;
     private int numberOfTasks;
     private ArrayList<Task> tasks;
-    private int globalCriterion;
+    private float globalCriterion;
 
     public Algorithm3() {
     }
@@ -46,8 +62,117 @@ public class Algorithm3 {
         scanner.close();
     }
 
-    private void calculate() {
+    private ArrayList<Task> sortTasks(SORT_TASK sortOption) {
 
+        ArrayList<Task> tmp = new ArrayList<>();
+        tmp.addAll(tasks);
+
+        if (sortOption == SORT_TASK.A) {
+            tmp.sort((o1, o2) -> {
+                int result1 = o1.getD() / o1.getW();
+                int result2 = o2.getD() / o2.getW();
+                return result1 - result2;
+            });
+        }
+
+        if (sortOption == SORT_TASK.B) {
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int result1 = sumP1 / o1.getW();
+                int result2 = sumP2 / o2.getW();
+                return result1 - result2;
+            });
+        }
+
+        if (sortOption == SORT_TASK.C) {
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int result1 = sumP1 + o1.getD() / o1.getW();
+                int result2 = sumP2 + o1.getD() / o2.getW();
+                return result1 - result2;
+            });
+        }
+
+        if (sortOption == SORT_TASK.D) {
+
+        }
+
+        if (sortOption == SORT_TASK.E) {
+
+        }
+
+        if (sortOption == SORT_TASK.F) {
+
+        }
+
+        if (sortOption == SORT_TASK.G) {
+
+        }
+
+        if (sortOption == SORT_TASK.H) {
+
+        }
+
+        if (sortOption == SORT_TASK.I) {
+
+        }
+
+        if (sortOption == SORT_TASK.J) {
+
+        }
+
+        if (sortOption == SORT_TASK.K) {
+
+        }
+
+        if (sortOption == SORT_TASK.L) {
+
+        }
+
+        return tmp;
+    }
+
+    private float calculateCriterion(List<Task> sortedTasks) {
+        float criterion = 0;
+        float weightSum = 0;
+        ArrayList<Integer> machinesTimes = new ArrayList<>();
+        machinesTimes.add(0);
+        machinesTimes.add(0);
+        machinesTimes.add(0);
+
+        ArrayList<Integer> sortedIds = new ArrayList<>();
+        for (Task task : sortedTasks) {
+            sortedIds.add(task.getId());
+        }
+        for (int i = 0; i < sortedTasks.size(); i++) {
+            int taskNumber = sortedIds.get(i) - 1;
+
+            for (int j = 0; j < 3; j++) {
+                if (j > 0) {
+                    machinesTimes.set(j, Math.max(machinesTimes.get(j), machinesTimes.get(j - 1)));
+                }
+                machinesTimes.set(j, machinesTimes.get(j) + tasks.get(taskNumber).getP().get(j));
+            }
+            criterion += tasks.get(taskNumber).getW() * Math.max(0, machinesTimes.get(2) - tasks.get(i).getD());
+            weightSum += tasks.get(taskNumber).getW();
+        }
+        criterion = (int) (float) Math.ceil(criterion / weightSum);
+        return criterion;
+    }
+
+    private void calculate() {
+        ArrayList<Task> sortedTasks;
+        float bestCriterion = this.globalCriterion;
+        for (Algorithm3.SORT_TASK sortType : Algorithm3.SORT_TASK.values()) {
+            sortedTasks = sortTasks(sortType);
+            float newResult = calculateCriterion(sortedTasks);
+            if (newResult < bestCriterion) {
+                bestCriterion = newResult;
+            }
+        }
+        this.globalCriterion = bestCriterion;
     }
 
     private void generateSolutionFile(int index, int size) {
@@ -56,8 +181,8 @@ public class Algorithm3 {
         try {
             writer = new FileWriter(filename);
             writer.write(globalCriterion + "\n");
-            for (Task task: tasks) {
-                writer.write( task.getId() + " ");
+            for (Task task : tasks) {
+                writer.write(task.getId() + " ");
             }
             writer.close();
         } catch (IOException e) {
@@ -66,14 +191,14 @@ public class Algorithm3 {
     }
 
     public void generateDummySolutionFile() {
-        for (int size: Project3.sizesArray) {
+        for (int size : Project3.sizesArray) {
             String filename = "project3/output/test_out/test_out_" + size + ".txt";
             FileWriter writer = null;
             try {
                 writer = new FileWriter(filename);
                 writer.write(0 + "\n");
                 for (int i = 1; i <= size; i++) {
-                    writer.write( i + " ");
+                    writer.write(i + " ");
                 }
                 writer.close();
             } catch (IOException e) {
@@ -82,7 +207,7 @@ public class Algorithm3 {
         }
     }
 
-    private void runForIndexWithSize(int index, int size) {
+    public void runForIndexWithSize(int index, int size) {
         resetFields();
         this.inputPath = "project3/input/" + index + "/" + index + "_" + size + ".txt";
         readFile();
