@@ -11,7 +11,7 @@ public class Project3 {
 //        new Algorithm3().generateDummySolutionFile();
 //        runAlgorithmToAllIndex(false);
         new Algorithm3().run(136698);
-//        new Algorithm3().runForIndexWithSize(136698, 500);
+//        new Algorithm3().runForIndexWithSize(136809, 50);
 //        new Validator().runValidation(136809, true);
     }
 

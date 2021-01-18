@@ -89,22 +89,40 @@ public class Algorithm3 {
             tmp.sort((o1, o2) -> {
                 int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
                 int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
-                int result1 = sumP1 + o1.getD() / o1.getW();
-                int result2 = sumP2 + o1.getD() / o2.getW();
+                int result1 = 2*sumP1 / o1.getW();
+                int result2 = 2*sumP2 / o2.getW();
                 return result1 - result2;
             });
         }
 
         if (sortOption == SORT_TASK.D) {
-
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int result1 = sumP1 - o1.getW();
+                int result2 = sumP2 - o2.getW();
+                return result1 - result2;
+            });
         }
 
         if (sortOption == SORT_TASK.E) {
-
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int result1 = 2*sumP1 - o1.getW();
+                int result2 = 2*sumP2 - o2.getW();
+                return result1 - result2;
+            });
         }
 
         if (sortOption == SORT_TASK.F) {
-
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int result1 = sumP1 + o1.getD() - 2*o1.getW();
+                int result2 = sumP2 + o2.getD() - 2*o1.getW();
+                return result1 - result2;
+            });
         }
 
         if (sortOption == SORT_TASK.G) {
@@ -163,16 +181,20 @@ public class Algorithm3 {
     }
 
     private void calculate() {
-        ArrayList<Task> sortedTasks;
+        ArrayList<Task> sortedTasks = null;
         float bestCriterion = this.globalCriterion;
+        ArrayList<Task> bestSolution = null;
         for (Algorithm3.SORT_TASK sortType : Algorithm3.SORT_TASK.values()) {
             sortedTasks = sortTasks(sortType);
             float newResult = calculateCriterion(sortedTasks);
             if (newResult < bestCriterion) {
+                bestSolution = new ArrayList<>();
+                bestSolution.addAll(sortedTasks);
                 bestCriterion = newResult;
             }
         }
         this.globalCriterion = bestCriterion;
+        this.tasks = bestSolution;
     }
 
     private void generateSolutionFile(int index, int size) {
@@ -182,6 +204,7 @@ public class Algorithm3 {
             writer = new FileWriter(filename);
             writer.write(globalCriterion + "\n");
             for (Task task : tasks) {
+                System.out.println(task.getId());
                 writer.write(task.getId() + " ");
             }
             writer.close();
