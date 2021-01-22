@@ -204,7 +204,6 @@ public class Algorithm3 {
             writer = new FileWriter(filename);
             writer.write(globalCriterion + "\n");
             for (Task task : tasks) {
-                System.out.println(task.getId());
                 writer.write(task.getId() + " ");
             }
             writer.close();
