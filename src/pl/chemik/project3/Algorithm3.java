@@ -33,6 +33,10 @@ public class Algorithm3 {
         T,
         U,
         V,
+        W,
+        X,
+        Y,
+        Z
     }
 
     private String inputPath;
@@ -317,8 +321,56 @@ public class Algorithm3 {
                 int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
                 int w1 = o1.getW() != 0 ? o1.getW() : -1;
                 int w2 = o2.getW() != 0 ? o2.getW() : -1;
-                int result1 = sumP1 * o1.getD() / (w1*w1);
-                int result2 = sumP2 * o2.getD() / (w2*w2);
+                int result1 = sumP1 * o1.getD() / (w1 * w1);
+                int result2 = sumP2 * o2.getD() / (w2 * w2);
+                return result1 - result2;
+            });
+        }
+
+        if (sortOption == SORT_TASK.W) {
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int w1 = o1.getW() != 0 ? o1.getW() : -1;
+                int w2 = o2.getW() != 0 ? o2.getW() : -1;
+                int result1 = 2 * sumP1 * o1.getD() / (w1 * w1);
+                int result2 = 2 * sumP2 * o2.getD() / (w2 * w2);
+                return result1 - result2;
+            });
+        }
+
+        if (sortOption == SORT_TASK.X) {
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int w1 = o1.getW() != 0 ? o1.getW() : -1;
+                int w2 = o2.getW() != 0 ? o2.getW() : -1;
+                int result1 = sumP1 * sumP1 / (w1 * w1);
+                int result2 = sumP2 * sumP2 / (w2 * w2);
+                return result1 - result2;
+            });
+        }
+
+        if (sortOption == SORT_TASK.Y) {
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int w1 = o1.getW() != 0 ? o1.getW() : -1;
+                int w2 = o2.getW() != 0 ? o2.getW() : -1;
+                int result1 = (sumP1 * sumP1) * o1.getD() / (w1 * w1);
+                int result2 = (sumP2 * sumP2) * o2.getD() / (w2 * w2);
+                return result1 - result2;
+            });
+        }
+
+        if (sortOption == SORT_TASK.Z) {
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int w1 = o1.getW() != 0 ? o1.getW() : -1;
+                int w2 = o2.getW() != 0 ? o2.getW() : -1;
+                int result1 = (sumP1 + o1.getW()) / (w1 * w1);
+                int result2 = (sumP2 + o2.getW()) / (w2 * w2);
                 return result1 - result2;
             });
         }
