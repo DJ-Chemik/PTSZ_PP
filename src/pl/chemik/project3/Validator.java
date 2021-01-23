@@ -55,7 +55,7 @@ public class Validator {
         }
         File file = new File(path + filename);
         Scanner scanner = new Scanner(file);
-        this.readedCriterion = scanner.nextInt();
+        this.readedCriterion = (int)Float.parseFloat(scanner.next());
         scanner.nextLine(); // to read all rubbish signs
         int actualMachine = 0;
         while (scanner.hasNextInt()) {

@@ -21,10 +21,10 @@ public class Project3 {
     public static void main(String[] args) {
 //        new InstanceGenerator().generate();
 //        new Algorithm3().generateDummySolutionFile();
-        runAlgorithmToAllIndex(false);
+//        runAlgorithmToAllIndex(false);
 //        new Algorithm3().run(142192);
 //        new Algorithm3().runForIndexWithSize(136809, 50);
-//        new Validator().runValidation(136800, true);
+        new Validator().runValidation(136748, true);
     }
 
     private static void runAlgorithmToAllIndex(boolean withValidation) {
