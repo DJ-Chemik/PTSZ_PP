@@ -213,25 +213,65 @@ public class Algorithm3 {
                 return result1 - result2;
             });
         }
-        
-        if (sortOption == SORT_TASK.M) {
 
+        if (sortOption == SORT_TASK.M) {
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + 3*o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + 3*o2.getP().get(1) + o2.getP().get(2);
+                int w1 = o1.getW() != 0 ? o1.getW() : -1;
+                int w2 = o2.getW() != 0 ? o2.getW() : -1;
+                int result1 = sumP1 + o1.getD() / w1;
+                int result2 = sumP2 + o2.getD() / w2;
+                return result1 - result2;
+            });
         }
 
         if (sortOption == SORT_TASK.N) {
-
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + 3*o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + 3*o2.getP().get(1) + o2.getP().get(2);
+                int w1 = o1.getW() != 0 ? o1.getW() : -1;
+                int w2 = o2.getW() != 0 ? o2.getW() : -1;
+                int result1 = sumP1 + 3*o1.getD() / w1;
+                int result2 = sumP2 + 3*o2.getD() / w2;
+                return result1 - result2;
+            });
         }
 
         if (sortOption == SORT_TASK.O) {
-
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int w1 = o1.getW() != 0 ? o1.getW() : -1;
+                int w2 = o2.getW() != 0 ? o2.getW() : -1;
+                int result1 = 2*sumP1 + 2*o1.getD() - 3*w1;
+                int result2 = 2*sumP2 + 2*o2.getD() - 3*w2;
+                return result1 - result2;
+            });
         }
 
         if (sortOption == SORT_TASK.P) {
-
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int w1 = o1.getW() != 0 ? o1.getW() : -1;
+                int w2 = o2.getW() != 0 ? o2.getW() : -1;
+                int result1 = sumP1 +  w1;
+                int result2 = sumP2 +  w2;
+                return result1 - result2;
+            });
         }
 
         if (sortOption == SORT_TASK.Q) {
-
+            tmp.sort((o1, o2) -> {
+                int sumP1 = o1.getP().get(0) + o1.getP().get(1) + o1.getP().get(2);
+                int sumP2 = o2.getP().get(0) + o2.getP().get(1) + o2.getP().get(2);
+                int w1 = o1.getW() != 0 ? o1.getW() : -1;
+                int w2 = o2.getW() != 0 ? o2.getW() : -1;
+                int result1 = sumP1 / o1.getD() - w1;
+                int result2 = sumP2 / o2.getD() - w2;
+                return result1 - result2;
+            });
         }
 
         if (sortOption == SORT_TASK.R) {
